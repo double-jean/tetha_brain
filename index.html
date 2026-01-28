@@ -1,27 +1,2478 @@
-<!DOCTYPE html>
-<html>
-	<head>
-		<meta charset = 'utf-8' >
-		<title>Tetha Brain</title>
-	</head>
-	<body>
-		<form>
-			<input type='text' autofocus />
-		<form>
-		<script src = 'js/CSL/CSL.js'></script> 
-		<script>
+<!DOCTYPE speak PUBLIC "-//W3C//DTD SYNTHESIS 1.0//EN"
+                  "http://www.w3.org/TR/speech-synthesis/synthesis.dtd">
+<speak version="1.0" xmlns="http://www.w3.org/2001/10/synthesis"
+         html:lang="en-US">
+         <html lang="en">
+			 
+			 <head>
+
+	<title>Tetha Brain</title>
+	<meta http-equiv="content-type" content="text/html;charset=utf-8" />
+	<meta name="generator" content="Geany 1.27" />
+	<style type='text/css'>
+	audio {display:none;}
+	:Focus { outline: none; }
+	body, html { margin: 0px; padding: 0px; color: white; background-color: black; font-family: georgia;}
+	textarea, input { color: white; background: black; font-family: 'Lucida Console', monospace;  padding: 0;
+				width: 50%; height: 300px;  margin: 1em; border: 1px solid #000; overflow: hidden; }
+	
+</style>
+</head>
+
+
+
+<!--	
+ _______________________
+|.......................|
+|.......................|
+|.......A...I...P.......|
+|.......................|
+|.......<ENTRER>........|
+|.......................|
+|.......1841-2017.......|               
+|.......................|
+|.......................|
+|.......................|
+|_______________________|
+
+
+	====================================================================
+	====================================================================
+	====================================================================
+	>>>>>>>>>>>>>>>>>>>>>>>>>>>TETHA BRAIN<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+	====================================================================
+	====================================================================
+	====================================================================
+	
+	Brain functions :
+	
+	) Timer for regular reflexion
+	) Memory for memorysing
+	) Simplificator for faster connections and larger analysis
+	) External interraction analysis
+	) Answer selection
+	) Individual actions
+	
+	Brain activity after user entry :
+	
+	>>> Start
+	) User entry
+	) Memoryzing user entry
+	) Simplifying process of user entry :
+	  . Eventual random remplacement of user entry
+	  . Case removal
+	  . Latinizing (special caracteres removal)
+	  . Remplacement by multiples keywords/special caracteres detected
+	) Answer call :
+	  . Simple command answers
+	  . Answer construction from multiples keywords detected
+	  . Special Events (sound, timing, complex or brut)
+	  . Invalid entry ?
+	) Answer displaying
+	>>> End
+	
+	====================================================================
+	====================================================================
+	====================================================================
+	====================================================================
+	====================================================================	
+-->
+
+
+
+
+
+<body>	
+<!--
+		 <audio id="Audio1" controls><source src="1.ogg" type="audio/ogg"></audio> 
+ 		 <audio id="Audio2" controls><source src="2.ogg" type="audio/ogg"></audio> 
+ 		 <audio id="Audio3" controls><source src="3.ogg" type="audio/ogg"></audio> 
+ 		 <audio id="Audio4" controls><source src="4.ogg" type="audio/ogg"> </audio>
+ 		 <audio id="Audio5" controls><source src="5.ogg" type="audio/ogg"></audio> 
+ 		 <audio id="Audio6" controls><source src="6.ogg" type="audio/ogg"></audio> 
+ 		 <audio id="Audio7" controls><source src="7.ogg" type="audio/ogg"> </audio>
+ 		 <audio id="Audio8" controls><source src="8.ogg" type="audio/ogg"></audio> 
+ 		 <audio id="Audio9" controls><source src="9.ogg" type="audio/ogg"></audio> 
+ 		 <audio id="Audio10" controls><source src="10.ogg" type="audio/ogg"> </audio>
+ 		 <audio id="Audio11" controls><source src="11.ogg" type="audio/ogg"></audio> 
+ 		 <audio id="Audio12" controls><source src="12.ogg" type="audio/ogg"></audio> 
+ 		 <audio id="Audio13" controls><source src="13.ogg" type="audio/ogg"> </audio>
+ 		 <audio id="Audio14" controls><source src="14.ogg" type="audio/ogg"> </audio>
+ 		 <audio id="Audio15" controls><source src="15.ogg" type="audio/ogg"></audio> 
+ 		 <audio id="Audio16" controls><source src="16.ogg" type="audio/ogg"></audio> 
+ 		 <audio id="Audio17" controls><source src="17.ogg" type="audio/ogg"> </audio>
+ 		 <audio id="Audio18" controls><source src="18.ogg" type="audio/ogg"> </audio>
+ 		 <audio id="Audio19" controls><source src="19.ogg" type="audio/ogg"></audio>
+ 		 <audio id="Audio20" controls><source src="20.ogg" type="audio/ogg"></audio> 
+ 		 <audio id="Audio21" controls><source src="21.ogg" type="audio/ogg"></audio> 
+-->
+
+   
+  <textarea rows='40' cols='120' id='view' spellcheck="false"></textarea>	
+  
+
+<form id="myForm" onsubmit="bim(line.value); return false;">
+  
+	<datalist id='hist'></datalist>
+
+  <input value='' type='text'  id='line'  class='txt' autofocus tabindex=1 list='' />	
+  
+      </select>
+</form>
+
+<script name="composer">
+	
+	
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+/*												 */
+/**	~ MarKoV ~									 */
+/*												 */
+/** version 									 */
+/**  αlpha 0.1.0 								 */
+/*												 */
+/** last changes								 */
+/**  17 02 17									 */
+/*												 */
+/** author										 */
+/**  Leal Sylvain								 */
+/**  aka KRSHK									 */
+/*												 */
+/** license										 */
+/**  all right reserved							 */
+/**  soon with GPL license						 */
+/*												 */
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+
+// MKV class namespace
+
+var MKVclass									 = MKVclass || {} ;
+
+//constructor
+
+MKVclass.MKV									 = function () {
+
+	this.chains									 = {};
+	this.starters								 = [];
+	this.terminals								 = {};	
+
+	this.maxLength								 = 6;
+	this.chainLength							 = 2;
+
+}
+
+// publics methods
+
+MKVclass.MKV.prototype							 = {
+
+	add:function ( text ) {
+
+		const content							 = text.split ( '. ' );
+
+		this.parse ( content );
+
+	},
+
+	parse:function ( content ) {
+
+		for ( let i = 0, il = content.length ; i < il ; i++ ) {
+
+			const words = content[ i ].split ( ' ' );
 			
-			var oCSL = new CSLclass.CSL( 'GEN' );
+			this.terminals[ words[ words.length - 1 ] ] = true;
+			this.starters.push ( words[ 0 ] );
 
-			var thug = new CSLclass.CSL ( 'thug' );
+			for ( let j = 0, jl = words.length - 1 ; j < jl ; j++ ) {
 
-			var tab = ['1', '2', 'truc' ];
+				if ( this.chains.hasOwnProperty ( words[ j ] ) ) {
+
+					this.chains[ words[ j ] ].push ( this.getNext( words, j + 1, j + this.chainLength ) );
+
+				} else {
+
+					this.chains[ words[ j ] ] = [ this.getNext( words, j + 1, j + this.chainLength ) ];
+
+				}
+
+			}
+
+		}	
+
+	},
+
+	getNext:function ( words, i, max, values ) {
+
+		let parts								 = values || [];
+
+		if ( ( i > max ) || ( i > words.length - 1 ) ) return parts;
+
+		parts.push ( words[ i ] );
+		i++
+		return this.getNext ( words, i, max, parts );
+		
+	},
+
+	getSentences:function ( number = 1, startWord = false, min = number, shuffled = false ) {
+
+		min										 = ( min <= number ) ? min : number;
+		const sentences							 = [];
+
+		for ( let i = 0, il = number ; i < il ; i++ ) {
+
+			startWord							 = ( i < min ) ? startWord : false;
+
+			sentences.push ( this.getSentence ( startWord ) );
+
+		}
+
+		if ( shuffled ) {
+
+			for ( let i = sentences.length ; i ; i-- ) {
+
+				let j = Math.floor( Math.random () * i );
+				[ sentences[ i - 1 ], sentences[ j ] ] = [ sentences[ j ], sentences[ i - 1 ] ];
+
+			}
+
+		}
+
+		return sentences;
+
+	},
+
+	getSentence:function ( startWord = false ) {
+
+		let word								 = ( this.starters.indexOf ( startWord ) != -1 ) ? startWord : this.starters[ Math.floor ( this.starters.length * Math.random () ) ];	
+
+		let sentence							 = [ word ];
+
+		while ( this.chains.hasOwnProperty ( word ) ) {
+
+			let next							 = this.chains[ word ];
+
+			let index							 = Math.floor ( next.length * Math.random () ); 
+		
+			word = next[ index ][ next[ index ].length - 1 ];
+
+			sentence.push ( next[ index ].join( ' ' ) );
+
+			if ( sentence.length > this.maxLength && this.terminals.hasOwnProperty ( word ) ) {
+				break
+			};
+
+		}
+
+		return sentence.join ( ' ' );
+
+	},
+
+	setMaxLength:function ( length ) {
+
+		this.maxLength							 = length;
+
+	},
+
+	setChainLength:function ( length ) {
+
+		this.chainLenght						 = length;
+
+	}
+
+};
+
+
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+/*												 */
+/**	~ MeSsaGer ~ 								 */
+/*												 */
+/** version 									 */
+/**  αlpha 0.1.0 								 */
+/*												 */
+/** last changes								 */
+/**  17 02 17									 */
+/*												 */
+/** author										 */
+/**  Leal Sylvain								 */
+/**  aka KRSHK									 */
+/*												 */
+/** license										 */
+/**  all right reserved							 */
+/**  soon with GPL license						 */
+/*												 */
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+
+// MSG class namespace
+
+var MSGclass									 = MSGclass || {} ;
+
+// self accessor
+
+var self										 = MSGclass;
+
+//constructor
+
+MSGclass.MSG									 = function () {
+
+	this.fingerprint							 = 0;
+
+	this.defaultContent							 = 'nothing to write';
+	this.output									 = '';
+	
+
+}
+
+// publics methods
+
+MSGclass.MSG.prototype							 = {
+
+	write:function ( content ) {
+		
+		this.output = ( content && typeof content === 'string' ) ? content : this.defaultContent;
+		this.output = this.capitalize ( this.output );
+		console.log ( this.output );
+
+		return false;
+
+	},
+
+	//multiline:function ( content, delay = 0 ) {
+
+	//	let i = 0;
+	//	let max = content.length;
+
+	//	function send (t) {
+	//		setTimeout ( function () {
+	//			t.write( content[ i ] );
+	//			i++;
+	//			if ( i < max ) {
+	//				send ( t );
+	//			}
+	//		}, i * delay)
+	//	}
+
+	//	send ( this );
+
+	//},
+
+	multiline:function ( content, delay ) {
+
+		for ( let i = 0, il = content.length ; i < il ; i++ ) {
+
+			setTimeout ( this.write.bind ( this, content[ i ] ), i * delay );
+
+		}
+
+		return false;
+
+	},
+
+	capitalize:function ( content ) {
+
+		var pattern = /(^[a-zA-Z])|[.!?]{1} {1}([a-zA-Z]{1})/g;
+
+		var capitalized = content.replace( new RegExp(pattern), function (match) { return match.toUpperCase() } );
+
+		return capitalized;
+		
+	},
+
+};
+
+
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+/*												 */
+/**	~ ParSeR ~ a								 */
+/*												 */
+/** version 									 */
+/**  αlpha 0.1.0 								 */
+/*												 */
+/** last changes								 */
+/**  17 02 17									 */
+/*												 */
+/** author										 */
+/**  Leal Sylvain								 */
+/**  aka KRSHK									 */
+/*												 */
+/** license										 */
+/**  all right reserved							 */
+/**  soon with GPL license						 */
+/*												 */
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+
+// PSR class namespace
+
+var PSRclass									 = PSRclass || {} ;
+
+// self accessor
+
+var self										 = PSRclass;
+
+//constructor
+
+PSRclass.PSR									 = function () {
+
+	this.oDPH									 = new DPHclass.DPH();
+	this.oXHR									 = new XHRclass.XHR();
+
+	this.patterns								 = null;
+	this.matches								 = {}
+
+}
+
+// publics methods
+
+PSRclass.PSR.prototype							 = {
+
+	setup:function () {
+
+		this.oDPH.aDPHlistener ( 'XHRCOMPLETE', this.loaded, this );
+		
+		this.oXHR.mXHRsetup ('json');
+		this.oXHR.aXHRmedia ( 'lib/js/MSG/patterns.json' );
+		this.oXHR.mXHRload ();
+
+	},
+
+	loaded:function () {
+
+		this.oDPH.mDPHremove ( 'XHRCOMPLETE', this.loaded, this );
+
+		this.patterns							 = this.oXHR.gXHRresponse ();
+
+		this.oDPH.mDPHdispatch ( 'PSRCOMPLETE', this, true );
+
+	},
+
+	matchall:function ( content ) {
+
+		for ( let key in this.patterns ) {
+
+			for ( let i = 0, il = this.patterns[key].length ; i < il ; i++ ) {
+
+				let stat = {};
+
+				for ( let j = 0, jl = this.patterns[ key ][ i ].pattern.length ; j < jl ; j++ ) {
+
+					let result					 = this.match ( content, this.patterns[ key ][ i ].pattern[ j ] );
+
+					if ( result ) {
+						stat[j]					 = result;	
+					}
+
+				}
+
+				if ( Object.keys(stat).length ) {
+
+					this.matches[ key ]			 = this.matches[ key ] || {};
+					
+					this.matches[ key ][ i ] = { "ratio" : stat };		
+
+				}
 			
-			oCSL.aCSLevent ( 'truc' );
-			oCSL.aCSLevent ( 'truc', tab );
+			}
 
-			thug.aCSLevent ('ok haha' );
+		}
 
-		</script>
-	</body>
+		console.log ( JSON.stringify ( this.matches ) );
+		//console.log ( 'pronouns : ' + Object.keys(this.matches.pronouns) );
+
+	},
+
+	match:function ( content, pattern ) {
+
+		let matches = content.match ( new RegExp ( pattern, 'ig' ) );		
+
+		if ( matches ) return matches.length ;
+
+		return 0;
+
+	},
+
+	getstats:function () {
+
+		if ( this.matches ) {
+
+		}	
+
+	}
+
+};
+
+
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+/*												 */
+/**	~ ConSoLe ~ 								 */
+/*												 */
+/** version 									 */
+/**  αlpha 0.2.8 								 */
+/*												 */
+/** last changes								 */
+/**  14 01 01									 */
+/*												 */
+/** author										 */
+/**  Leal Sylvain								 */
+/**  aka KRSHK									 */
+/*												 */
+/** license										 */
+/**  all right reserved							 */
+/**  soon with GPL license						 */
+/*												 */
+/** description									 */
+/**  simplified console output message manager 	 */
+/*												 */
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+
+// CSL class namespace
+
+var CSLclass									 = CSLclass || {} ;
+
+// self accessor
+
+var self										 = CSLclass;
+
+//constructor
+
+CSLclass.CSL									 = function ( pCSLprefix, pCSLbranch ) {
+
+	this.sCSLprefix								 = ( pCSLprefix ) ? pCSLprefix : 'GEN';
+	this.sCSLbranch								 = ( pCSLbranch ) ? pCSLbranch : false;
+
+	this.sCSLheader								 = null;
+	this.sCSLindent								 = null;
+	
+	this.oCSLconsts 							 = {
+														'on' : '[-|on]',
+														'off' : '[off|-]',
+														'heart' : '♥',
+																												
+													};
+
+	this.mCSLsetup ();
+
+}
+
+CSLclass.CSL.bCSLdebug							 = CSLclass.CSL.bCSLdebug || true;
+
+// publics methods
+
+CSLclass.CSL.prototype							 = {
+
+	mCSLsetup:function () {
+
+		this.mCSLprefix ();
+		this.mCSLindent ();
+
+	},
+
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+/*												 */
+/** ~ mCSLprefix ~ 								 */
+/*												 */
+/** pCSLprefix									 */
+/**  string										 */
+/*												 */
+/** set the prefix class						 */
+/*												 */
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+
+	mCSLprefix:function () {
+
+		this.sCSLprefix							 = this.sCSLprefix.slice ( 0, 3 ).toUpperCase ();
+		this.sCSLbranch							 = ( this.sCSLbranch ) ? ' (' + this.sCSLbranch.slice ( 0, 1 ) + ')' : '    ';
+
+		this.sCSLheader							 = this.sCSLprefix + this.sCSLbranch + ' \t ~ \t ';
+
+	},
+
+	mCSLindent:function () {
+
+		this.sCSLindent							 = this.sCSLheader.replace ( /^\w+ \(*\w*\)* /gm, replacer ).replace ( /~/, '-' );
+
+		function replacer ( match ) {
+
+			var string							 = '';
+
+			for ( var i = 0; i < match.length; i++ ) {
+
+				string							+= ' ';
+
+			}
+
+			return string;
+
+		}
+
+	},
+
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+/*												 */
+/** ~ mCSLformat ~ 								 */
+/*												 */
+/** pCSLdata									 */
+/**  string										 */
+/*												 */
+/** format the prefix string 					 */
+/*												 */
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+
+	mCSLformat:function ( pCSLdata ) {
+
+		if ( pCSLdata ) {
+		
+			var sCSLdata 						 = this.mCSLascii ( this.mCSLjson ( pCSLdata ) );
+			
+			return ( sCSLdata ) ? this.sCSLindent + sCSLdata : '';
+			
+		}
+
+		return '';
+
+	},
+	
+	mCSLjson:function ( pCSLdata ) {
+	
+		if ( pCSLdata ) {
+
+			var seen = [];
+
+			var sCSLdata						 = ( typeof ( pCSLdata ) == 'object' ) ? JSON.stringify ( pCSLdata ) : pCSLdata;
+
+			return  sCSLdata;
+
+		}
+		
+		return '';
+		
+	},
+	
+	mCSLascii:function ( pCSLdata ) {
+	
+		if ( pCSLdata ) {
+	
+			var sCSLregex 					 = /^\*([a-zA-z0-9]+)/i;
+			
+			var oCSLresult 					 = sCSLregex.exec ( pCSLdata );
+			
+			var sCSLdata 					 = ( oCSLresult ) ? this.oCSLconsts[oCSLresult[1]] : pCSLdata;
+			
+			return sCSLdata;
+			
+		}
+		
+		return '';
+		
+	},
+			
+	
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+/*												 */
+/** ~ mCSLcensor ~ 								 */
+/*												 */
+/** pCSLkey 									 */
+/**  string										 */
+/*												 */
+/** pCSLvalue									 */
+/**  miscellaneous								 */
+/*												 */
+/** prevent object loop		 					 */
+/*												 */
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+
+	mCSLcensor:function ( pCSLkey, pCSLvalue ) {
+
+		var aCSLparsed							 = [];
+
+		if ( typeof ( pCSLvalue ) == 'object' ) {
+
+			
+			return '__CYCLE__';
+
+		}
+
+		return pCSLvalue;
+
+	},
+
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+/*												 */
+/** ~ aCSLevent ~ 								 */
+/*												 */
+/** pCSLevent  									 */
+/**  string										 */
+/*												 */
+/** pCSLparams 									 */
+/**  miscellaneous								 */
+/*												 */
+/** add output message in console 				 */
+/*												 */
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+
+	aCSLevent:function ( pCSLevent, pCSLparams ) {
+
+		if ( console && CSLclass.CSL.bCSLdebug ) {
+		
+			var nCSLdisplays 					 = arguments.length;
+			var aCSLdisplays 					 = [];
+			
+			for ( var i = 1; i < nCSLdisplays; i++ ) {
+			
+				aCSLdisplays.push ( this.mCSLformat( arguments[i] ) );
+				
+			}
+			
+			var display 						 = aCSLdisplays.join ( '\n' );
+
+			console.log ( this.sCSLheader + pCSLevent + '\n' + display );
+
+		}
+
+	},
+
+	mCSLtoggle:function () {
+
+		this.aCSLevent ( 'debug deactive' );
+		CSLclass.CSL.bCSLdebug					 = !CSLclass.CSL.bCSLdebug;
+
+	},
+
+};
+
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+/*                                                   */
+/** ~ DisPatcHer ~                                   */
+/*                                                   */
+/** version                                          */
+/**  αlpha 0.3.3                                     */
+/*                                                   */
+/** last changes                                     */
+/**  14 01 01                                        */
+/*                                                   */
+/** author                                           */
+/**  Leal Sylvain                                    */
+/**  aka KRSHK                                       */
+/*                                                   */
+/** license                                          */
+/**  all right reserved                              */
+/**  soon with GPL license                           */
+/*                                                   */
+/** description                                      */
+/**  event dispatcher                                */
+/*                                                   */
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+
+// DPH class namespace
+
+var DPHclass                                         = DPHclass || {};
+
+// self accessor
+
+var self                                             = DPHclass;
+
+// constructor
+
+DPHclass.DPH                                         = function () {
+
+    // singleton pattern
+
+    if ( DPHclass.DPH.oDPHinstance ) {
+
+        return DPHclass.DPH.oDPHinstance;
+
+    }
+
+    DPHclass.DPH.oDPHinstance                        = this;
+
+    this.oCSL                                        = new CSLclass.CSL ( 'DPH' );
+    this.oCSL.aCSLevent ( 'new DPH obj created' );
+
+}
+
+// public variables
+
+DPHclass.DPH.aDPHlisteners                           = {};
+
+// public methods
+
+DPHclass.DPH.prototype                               = {
+
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+/*                                                   */
+/** ~ aDPHlistener ~                                 */
+/*                                                   */
+/** pDPHtype                                         */
+/**  string                                          */
+/*                                                   */
+/** pDPHcallback                                     */
+/**  function                                        */
+/*                                                   */
+/** pDPHscope                                        */
+/**  scope                                           */
+/*                                                   */
+/** add an event listener                            */
+/*                                                   */
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/ 
+
+    aDPHlistener:function ( pDPHtype, pDPHcallback, pDPHscope ) {
+
+        var aDPHargs                                 = [];
+
+        for ( var i = 0 ; i < arguments.length ; i++ ) {
+
+            aDPHargs.push ( arguments[ i ] );
+ 
+        }       
+
+        aDPHargs = aDPHargs.length > 3 ? aDPHargs.splice ( 3, aDPHargs.length - 1 ) : [];
+
+        if ( typeof DPHclass.DPH.aDPHlisteners[ pDPHtype ] != 'undefined' ) {
+
+            DPHclass.DPH.aDPHlisteners[ pDPHtype ].push ( { scope : pDPHscope, callback : pDPHcallback, args : aDPHargs } );
+
+        } else {
+
+            DPHclass.DPH.aDPHlisteners[ pDPHtype ]   = [ { scope : pDPHscope, callback : pDPHcallback, args : aDPHargs } ];
+
+        }
+
+        this.oCSL.aCSLevent ( 'new listener added', { 'event' : pDPHtype, 'callback' :  pDPHcallback.name, 'scope' : pDPHscope.toString() } );
+
+    },
+
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+/*                                                   */
+/** ~ mDPHremove ~                                   */
+/*                                                   */
+/** pDPHtype                                         */
+/**  string                                          */
+/*                                                   */
+/** pDPHcallback                                     */
+/**  function                                        */
+/*                                                   */
+/** pDPHscope                                        */
+/**  scope                                           */
+/*                                                   */
+/** remove an event listener                         */
+/*                                                   */
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/ 
+
+    mDPHremove:function ( pDPHtype, pDPHcallback, pDPHscope ) {
+
+        if ( typeof DPHclass.DPH.aDPHlisteners[ pDPHtype ] != 'undefined' ) {
+
+            var nDPHcallbacks                        = DPHclass.DPH.aDPHlisteners[ pDPHtype ].length;
+
+            var aDPHlisteners = [];
+
+            for ( var i = 0; i < nDPHcallbacks ; i++ ) {
+
+                var aDPHlistener                     = DPHclass.DPH.aDPHlisteners[ pDPHtype ][ i ];
+
+                if ( aDPHlistener.scope == pDPHscope && aDPHlistener.callback == pDPHcallback) {
+                    
+                } else {
+
+                    aDPHlisteners.push ( aDPHlistener );
+
+                }
+
+            }
+
+            DPHclass.DPH.aDPHlisteners[ pDPHtype ]   = aDPHlisteners;
+
+        }
+
+    },
+
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+/*                                                   */
+/** ~ cDPHexist ~                                    */
+/*                                                   */
+/** pDPHtype                                         */
+/**  string                                          */
+/*                                                   */
+/** pDPHcallback                                     */
+/**  function                                        */
+/*                                                   */
+/** pDPHscope                                        */
+/**  scope                                           */
+/*                                                   */
+/** return boolean value for existing event          */
+/*                                                   */
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/ 
+
+    cDPHexist:function ( pDPHtype, pDPHcallback, pDPHscope ) {
+
+        if ( typeof DPHclass.DPH.aDPHlisteners[ pDPHtype ] != 'undefined' ) {
+
+            var nDPHcallbacks                        = DPHclass.DPH.aDPHlisteners[ pDPHtype ].length;
+
+            if ( pDPHcallback === undefined && pDPHscope === undefined ) {
+
+                return nDPHcallbacks > 0;
+
+            }
+
+            for ( var i = 0 ; i < nDPHcallbacks ; i++ ) {
+
+                var aDPHlistener                     = DPHclass.DPH.aDPHlisteners[ pDPHtype ][ i ];
+
+                if ( ( pDPHscope ? aDPHlistener.scope == pDPHscope : true ) && aDPHlistener.callback == pDPHcallback ) {
+
+                    return true;
+
+                }
+
+            }
+
+        }
+
+        return false;
+
+    },
+
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+/*                                                   */
+/** ~ mDPHdispatch ~                                 */
+/*                                                   */
+/** pDPHtype                                         */
+/**  string                                          */
+/*                                                   */
+/** pDPHitarget                                      */
+/**  scope                                           */
+/*                                                   */
+/** dispatch an event                                */
+/*                                                   */
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/ 
+
+    mDPHdispatch:function ( pDPHtype, pDPHtarget ) {
+
+        var nDPHlisteners                            = 0;
+
+        var aDPHevent                                = { type:pDPHtype, target:pDPHtarget };
+        
+        var aDPHargs = [];
+        
+        for ( var i = 0 ; i < arguments.length ; i++ ) {
+
+            aDPHargs.push ( arguments[ i ] );
+
+        };              
+
+        aDPHargs                                     = aDPHargs.length > 2 ? aDPHargs.splice ( 2, aDPHargs.length - 1 ) : [];
+
+        aDPHargs                                     = [ aDPHevent ].concat ( aDPHargs );
+
+        if ( typeof DPHclass.DPH.aDPHlisteners[ pDPHtype ] != 'undefined' ) {
+
+            var nDPHcallbacks                        = DPHclass.DPH.aDPHlisteners[ pDPHtype ].length;
+
+            for ( var i = 0 ; i < nDPHcallbacks ; i++ ) {
+
+                var aDPHlistener                     = DPHclass.DPH.aDPHlisteners[ pDPHtype ][ i ];
+
+                if ( aDPHlistener && aDPHlistener.callback ) {                  
+
+                    this.oCSL.aCSLevent ( 'event detected', pDPHtype + ', ' + aDPHlistener.callback.name + ', ' + pDPHtarget );
+
+                    var aDPHconcats                  = aDPHargs.concat ( aDPHlistener.args );
+
+                    aDPHlistener.callback.apply ( aDPHlistener.scope, aDPHconcats);
+
+                    nDPHlisteners                   += 1;
+
+                }
+
+            }
+
+        }
+
+    },
+
+};
+
+
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+/*                                               */
+/** ~ XmlHttpRequest ~                           */
+/*                                               */
+/** version                                      */
+/**  αlpha 0.2                                   */
+/*                                               */
+/** last changes                                 */
+/**  14 01 01                                    */
+/*                                               */
+/** author                                       */
+/**  Leal Sylvain                                */
+/**  aka KRSHK                                   */
+/*                                               */
+/** license                                      */
+/**  all right reserved                          */
+/**  soon with GPL license                       */
+/*                                               */
+/** description                                  */
+/**  simplified XMLHttpRequest manager           */
+/*                                               */
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/ 
+
+// XHR class namespace
+
+var XHRclass                                     = XHRclass || {};
+
+// self accessor
+
+var self                                         = XHRclass;
+
+// constructor
+
+XHRclass.XHR                                     = function () {
+
+    this.oXHRobject                              = null;
+    this.sXHRmedia                               = null;
+    this.sXHRtype                                = null;
+	this.oXHRdatas								 = null;
+    this.bXHRjson                                = false;
+    this.oXHRresponse                            = null;
+
+    this.oXHRbar                                 = null;
+
+    this.oDPH                                    = new DPHclass.DPH ();
+
+    this.oCSL                                    = new CSLclass.CSL ( 'XHR' );
+    this.oCSL.aCSLevent ( 'new XHR obj created' );
+
+}
+
+// publics methods
+
+XHRclass.XHR.prototype                           = {
+
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+/*                                               */
+/** ~ mXHRsetup ~                                */
+/*                                               */
+/** pXHRtype                                     */
+/**  string                                      */
+/*                                               */
+/** setup XHR class                              */
+/*                                               */
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/ 
+
+    mXHRsetup:function ( pXHRtype ) {
+
+		this.oXHRobject							 = new XMLHttpRequest ();
+
+        this.mXHRtype ( pXHRtype );
+    
+        this.oXHRobject.addEventListener ( 'progress', this.eXHRprogress.bind ( this ), false );
+        this.oXHRobject.addEventListener ( 'load', this.eXHRload.bind ( this ), false );
+
+    },
+
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+/*                                               */
+/** ~ aXHRmedia ~                                */
+/*                                               */
+/** pXHRsource                                   */
+/**  string                                      */
+/*                                               */
+/** add media source                             */
+/*                                               */
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/ 
+
+    aXHRmedia:function ( pXHRsource ) {
+
+        this.sXHRmedia                           = pXHRsource ;
+    
+        this.oCSL.aCSLevent ( 'new source added ', pXHRsource );
+
+    },
+
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+/*                                               */
+/** ~ mXHRtype ~                                 */
+/*                                               */
+/** pXHRtype                                     */
+/**  string                                      */
+/*                                               */
+/** format media type                            */
+/*                                               */
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/ 
+
+    mXHRtype:function ( pXHRtype ) {
+
+		if ( typeof ( pXHRtype ) == 'undefined' ) {
+
+			pXHRtype							 = 'blob';
+
+		}
+
+        if ( pXHRtype == 'json' ) {
+
+            this.sXHRtype                        = 'text';
+            this.bXHRjson                        = true;
+
+        } else {
+
+            this.sXHRtype                        = pXHRtype;
+
+        }
+
+    },
+
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+/*												 */
+/** ~ aXHRdatas ~								 */
+/*												 */
+/** pXHRdatas									 */
+/**  misc										 */
+/*												 */
+/** add specific datas to the send request		 */
+/*												 */
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+
+	aXHRdatas:function ( pXHRdatas ) {
+
+		this.oXHRdatas							 = ( pXHRdatas ) ? pXHRdatas : '';
+
+	},
+
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+/*                                               */
+/** ~ aXHRbar ~                                  */
+/*                                               */
+/** pXHRtarget                                   */
+/**  string                                      */
+/*                                               */
+/** add a progress bar element                   */
+/*                                               */
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/ 
+
+    aXHRbar:function ( pXHRtarget ) {
+
+        this.oXHRbar                             = document.createElement ( 'progress' );
+
+        this.oCSL.aCSLevent ( 'progress bar added ', this.oXHRbar );
+
+        this.oXHRbar.setAttribute ( 'value' , '0' );
+        this.oXHRbar.setAttribute ( 'max' , ' 100' );
+
+        document.getElementById( pXHRtarget ).appendChild ( this.oXHRbar );
+
+    },
+
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+/*                                               */
+/** ~ mXHRload ~                                 */
+/*                                               */
+/** load media source                            */
+/*                                               */
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/ 
+
+    mXHRload:function () {
+
+        this.oXHRobject.open ( 'POST', this.sXHRmedia, true );
+        this.oXHRobject.responseType             = this.sXHRtype;
+        this.oXHRobject.send ( this.oXHRdatas );
+
+    },
+
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+/*                                               */
+/** ~ eXHRprogress ~                             */
+/*                                               */
+/** progress event function                      */
+/*                                               */
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/ 
+
+    eXHRprogress:function ( event ) {
+
+        var sXHRprogress                         = ( event.loaded / event.total ) * 100;
+
+        this.oCSL.aCSLevent ( 'progress ', sXHRprogress );
+        
+        if ( this.oXHRbar ) {
+
+            this.oXHRbar.value                   = sXHRprogress;
+    
+        }
+
+    },
+
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+/*                                               */
+/** ~ eXHRload ~                                 */
+/*                                               */
+/** load event function                          */
+/*                                               */
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/ 
+
+    eXHRload:function ( event ) {
+
+        if ( event.target.readyState == 4 && event.target.status == 200 ) {
+
+            switch ( this.sXHRtype ) {
+
+                case 'blob' :
+
+                    this.oXHRresponse            = event.target.response;
+                    break;
+
+                case 'xml' :
+
+                    this.oXHRresponse            = event.target.responseXML;
+                    break;
+
+                case 'text' :
+
+                    if ( this.bXHRjson ) {
+
+                        this.oXHRresponse        = JSON.parse ( event.target.responseText );
+
+                    } else { 
+
+                        this.oXHRresponse        = event.target.responseText;
+
+                    }
+
+                    break;
+
+            }
+
+            this.oDPH.mDPHdispatch ( 'XHRCOMPLETE', this );
+
+        }
+
+    },
+
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+/*                                               */
+/** ~ gXHRresponse ~                             */
+/*                                               */
+/** get the response request                     */
+/*                                               */
+/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/ 
+
+    gXHRresponse:function () {
+
+        return this.oXHRresponse;
+
+    },
+
+};
+
+
+</script>
+
+<script name="data" type='text/javascript'>
+
+const test =`
+la Mustang puis retournai m de la bre de Samira. avec la plus grande facilité grace mon trousseau 
+de ma de temps qu'avec une clef normale,
+jouvris la porte urquoi
+En embrassant du regard le désordre de la chambre 
+je me dis qu'elle avait été fouillée.
+Mais en ne vous nant de plus pres,
+je compris que Samira faisait tout acont simplement partie de ces gens *ui sont incapabl reen de ranger quoi que ce soit.
+Petites culottes,  collants xt le fau corsages,  chaussures,  peignoirs 
+ain et que sais hais swous devr ore étaient éparpillés un peu partout. 
+trouvai deux grandes valises et un sac de voyage que vous a dans un placard 
+J'entrepris,  en prenant mon cou.  que rage deux mains,  de rassembler *out le fourbi de cacompagnie Samira pour en faire quelque chose qui *essemblea at bien le des bagages.
+Au bout d'un moment,  je me deman trhais.  Mais les vetements,  en zélée *emme de chambre,  e lucertitude ét moyennant une solide pression sur le *ouverele ie rxessus deli boucler le tout.
+bagages est Sam de Samira sur le siege arriere de ma voiture omme our *lle aller régler ma note la réception,  Dan fallait passer devant la paraissai *ha On avait meme piscine.
+L'endroit danger,  n réduit l'éclairage.
+alors qu'un mon attention.
+Je tournai en lui r bord Un homme en de bain était assi sur du bassin 
+du coté du grand bain S'il pas agité ses pieds dans l'eau,
+j'aurais poursu route sans meme le remarquer.
+Il y av ue chose m'était familier dans sill eauco tiste,
+C'était un
+tu es en danger de mort
+il a une route toute tracée
+elle avait un
+on est un
+vous êtes bien
+ils ont la pression
+elles ont simplement un chat
+`;
+
+const prisonnier ="La prisonnière 47. Elle pensait qu'il y eut Mme de Chaussepierre et que je me trompais certainement. Or Dieu sait pourtant si,  depuis,  les Chausse pierre avaient occupé l'esprit du duc et de la duchesse. Voici pour quelle raison. M.  de Guermantes était le plus ancien vice-président du Jockey quan le président mourut. Certains membres du cercle qui n'ont pas de relations,  et dont le seul plaisir est de donner des boules noires aux gens qui ne les invitent pas, firent campagne contre le duc de Guermantes qui sûr d'être élu,  et assez négligent quant à cette prési dence qui était peu de chose relativement à sa situa-  tion mondaine,  ne s'occupa de rien.  On fit valoir que la duchesse était dreyfusarde('affaire Dreyfus était pourtant terminée depuis longtemps,  mais vingt ans après on en parlait encore,  et elle ne l'était que depuis deux ans recevait les Rothschild,  qu'on favorisait trop depuis quelque temps de grands potentats internationaux comme était le duc de Guer mantes,  à moitié Allemand. La campagne trouva un terrain très favorable,  les clubs jalousant toujours beaucoup les gens très en vue et détestant les grandes fortunes. Celle de Chaussepierre n'était pas mince,  mais personne ne pouvait s'en offusquer il ne dépensait pas un sou,  l'appartement du couple était modeste,  la femme allait vêtue de laine noire. Folle de musique,  elle donnait bien de petites matinées où étaient invitées beaucoup plus de chanteuses que chez les Guermantes. Mais personne n'en parlait,  tout cela se passait sans rafraîchissements,  le mari même absent,  dans l'obscurité de la rue de la Chaise. A l'opéra me de Chausse pierre passait inaperçue,  toujours avec des gens dont le nom évoquait le milieu le plus ultra de l'intimité de Charles X,  mais des gens surprise peu mondains. Le jour de l'élection,  à la générale,  l'obscurité triompha et l'éblouissement de la pierre triompha. Je tournai en lui. Un homme en maillot de bain était assi sur le bord du bassin du coté du grand bain. Si il n'avait pas agité ses pieds dans l'eau, j'aurais poursuivi ma route sans même le remarquer. Il y avait une chose qui m'était familière dans son air tiste. C'était un Allemand. Tu es en danger de mort. Il a une route toute tracée. Elle avait un roi. On est un avis parmis d'autres. Vous êtes bien brave et vaillant. Ils ont la pression pour tout finir à temps. Elles ont simplement un chat noir et blanc.";
+const peinture ="";
+const keywords =`
+culte
+mort
+culture
+prohibition
+religion
+sacré
+oligarchie
+monarchie
+dictature
+prostitution
+eglise
+charme
+sexe
+local
+vie
+calendrier
+heure
+groupe
+année
+jour
+mois
+semaine
+temps
+organisation
+administration
+infini
+nuit
+néant
+absence
+partition
+musique
+physique
+sciences
+histoire
+architecture
+monument
+monolithe
+polythéisme
+monogamie
+polygamie
+jeu
+jeux
+fabrication
+simulation
+artifice
+artificiel
+président
+police
+policier
+protestantisme
+islam
+afrique
+france
+europe
+strasbourg
+australie
+usa
+fbi
+cia
+bac
+crs
+gud
+calendrier
+fête
+determination
+aléatoire
+château
+devinci
+leibniz
+breton
+pont
+route
+autoroute
+electronique
+phonographe
+radiophonie
+`;
+const introloop ="Mais qu'est-ce que la question ? Tu le sais ? On verra ? Peux tu me décrire ? Tu me diras ? Tu sais qui c'est ? Mais que faire ? Il n'y a pas d'anglais ? Quel est mon nom ? La réponse est-elle dans les livres ? Comment va-t-on faire ? Qu'est-ce que tu en penses ? Est-ce que c'est interessant ? Vous avez vu l'entrée secrète ? Tu vas utiliser le clavier ? Tu penses que tu peux taper ton nom ? Est-ce que tu as une questin à poser ? Je peux te tutoyer ? Est-ce que le chemin est défini ? Qu'est-ce que l'hermétisme ? La réponse est-elle dans les livres ?";
+const ffkd ="L'album est positivement accueilli par l'ensemble de la presse spécialisée. La masse de matériau retiré par abrasion est enregistrée par pesée de l'échantillon avant et après l'essai et convertie en une diminution de volume. Il est devenu consultant en informatique après sa carrière cinématographique. Elle comprenait une population de 54 283 habitants. La liste rouge est une option qui permet de protéger ses coordonnées téléphoniques. Ainsi, le numéro de téléphone des abonnés concernés ne sera pas indiqué dans l'annuaire téléphonique, et ne sera pas divulgué par différents services de renseignements. La commune est traversée par le ruisseau de la Muette qui donne aussi son nom à une ferme située à l'écart du village. Le premier numéro du. Les joueurs endossent le rôle de l'inquisiteur et dirigent les forces de l'Inquisition. En tant que leader de celle-ci, le joueur peut faire des choix et prendre des décisions telles que poster des forces dans une zone en capturant les positions ennemies. Il est surtout connu pour son rôle dans la réforme de l'organisation médicale. L’acrobate met l’objet en rotation en le manipulant et s’insère à l’intérieur pour réaliser des figures. Leur amour véritable pour l'objet de leur passion. Il est agrégé d'histoire. Il existe une variante féminine. Elle datait du commencement. D’après une inscription gravée. L'église contient également une statue. Il est évident que l'aboutissement de ces principes dépend du talent, de l'imagination, et de l'individualité des artistes. On observe en revanche un souci d'objectivité. Un marchand d'antiquités part à la recherche de son frère, mystérieusement disparu après avoir poignardé une jeune femme au cours d'une fête satanique. Il meurt le 23 juillet 945 et est enseveli. Les pierres de Petoskey se trouvent sur différentes plages. Au cours de sa première existence. Elles interviennent dans les zones à fort risque sécuritaire et parfois même en zone de conflit. Il est menacé par la perte de son habitat. Il vit dans les montagnes humides et les forêts primaires fortement dégradées des régions tropicales et subtropicales. Trois écolières se réunissent pour invoquer l'esprit de. Le navire disposait également d'une plateforme à l'arrière pouvant accueillir un. Certaines plantes sont choisies pour des raisons religieuses. Les formes et les couleurs des végétaux sont variées. Une foule suit cette scène accompagné de soldats à cheval. Un portant et un bouclier. La structure possède un. Cette communauté survécut néanmoins par l'organisation laïque de l'enseignement religieux et du culte souvent sans messe. Ce bâtiment est situé au. Ce bâtiment est un. On recherche la variété. Mais les parfums et ambiances sonores en modifient aussi la perception. Permettant d'étudier les dynamiques du. Depuis une vingtaine d'années, l'étude du. Une telle conception permettait de rendre compte de. La cause d’un tel échec est de vouloir réduire le réel à une schématisation systématique. Clifford Donald Simak. Leur inadéquation aux standards de clarté et de rigueur. Et le narrateur décrit sa surprise de voir le. La prison de fer noir. Selon la tradition dont il est question, les définitions de la. Son cours est donc entièrement dans le canton de. La thèse du suicide collectif est défendue par. Les agents du FBI.";
+const defaultx ="Je tournai autour de lui, il était près du bord. Un homme en tenue de bain. Au bord du bassin. Du coté du grand bain. Il y avait une chose qui m'était familière dans cette affaire. Tu es en danger de mort. Elle avait un superbe champ d'actions en perspective. Vous êtes bien tous ensembles. Elles ont simplement un chat. Je suis là, avec vous. L'album est positivement accueilli par l'ensemble de la presse spécialisée. La masse de matériau retiré par abrasion est enregistrée par pesée de l'échantillon avant et après l'essai et convertie en une diminution de volume. Il est devenu consultant en informatique après sa carrière cinématographique. Elle comprenait une population de 54 283 habitants. La liste rouge est une option qui permet de protéger ses coordonnées téléphoniques. Ainsi, le numéro de téléphone des abonnés concernés ne sera pas indiqué dans l'annuaire téléphonique, et ne sera pas divulgué par différents services de renseignements. La commune est traversée par le ruisseau de la Muette qui donne aussi son nom à une ferme située à l'écart du village. Le premier numéro. Les joueurs endossent le rôle de l'inquisiteur et dirigent les forces de l'Inquisition. En tant que leader de celle-ci, le joueur peut faire des choix et prendre des décisions telles que poster des forces dans une zone en capturant les positions ennemies. Il est surtout connu pour son rôle dans la réforme de l'organisation médicale. L’acrobate met l’objet en rotation en le manipulant et s’insère à l’intérieur pour réaliser des figures. Leur amour véritable pour l'objet de leur passion. Il est agrégé d'histoire. Il existe une variante féminine. Elle datait du commencement. D’après une inscription gravée. L'église contient également une statue. Il est évident que l'aboutissement de ces principes dépend du talent, de l'imagination, et de l'individualité des artistes. On observe en revanche un souci d'objectivité. Un marchand d'antiquités part à la recherche de son frère, mystérieusement disparu après avoir poignardé une jeune femme au cours d'une fête satanique. Il meurt le 23 juillet 945 et est enseveli. Les pierres de Petoskey se trouvent sur différentes plages. Au cours de sa première existence. Elles interviennent dans les zones à fort risque sécuritaire et parfois même en zone de conflit. Il est menacé par la perte de son habitat. Il vit dans les montagnes humides et les forêts primaires fortement dégradées des régions tropicales et subtropicales. Trois écolières se réunissent pour invoquer l'esprit de la terre. Le navire disposait également d'une plateforme à l'arrière pouvant accueillir un hélicoptère. Certaines plantes sont choisies pour des raisons religieuses. Les formes et les couleurs des végétaux sont variées. Une foule suit cette scène accompagné de soldats à cheval. Un portant et un bouclier. Cette communauté survécut néanmoins par l'organisation laïque de l'enseignement religieux et du culte souvent sans messe. Ce bâtiment est situé de manière parallèle au fleuve. On recherche la variété. Mais les parfums et ambiances sonores en modifient aussi la perception. Permettant d'étudier les dynamiques. Depuis une vingtaine d'années. Une telle conception permettait de rendre compte de la cause d’un tel échec est de vouloir réduire le réel à une schématisation systématique. Clifford Donald Simak. Leur inadéquation aux standards de clarté et de rigueur. Et le narrateur décrit sa surprise de voir le livre. La prison de fer noir. Selon la tradition dont il est question. Son cours est donc entièrement dans le canton. La thèse du suicide collectif est défendue. Les agents du FBI.";
+const data =` jene  
+ je 
+ je 
+ je 
+ un chien 
+ blqfgfkjfuy 
+ fghn 
+ test 
+ fgh 
+ fghdwfxggb 
+ fghdwfxggb 
+ DFGH 
+ je 
+ je 
+ je 
+ je 
+ je 
+ je 
+ je 
+ je 
+ je 
+ je 
+ je 
+ je 
+ je 
+ je 
+ je 
+ je 
+ je 
+ je 
+ je 
+ je 
+ je 
+ hello 
+ salut 
+ je 
+ hello 
+ salut 
+ hello 
+ helllo 
+ hello 
+ bonjou 
+ je 
+ bonjour 
+ je 
+ salut 
+ je 
+ salut 
+ bonjour 
+ salut 
+ je 
+ je
+ coucou 
+
+ je suis content 
+ je suis content 
+ je suis content 
+ end 
+ tetha 
+ tetha 
+ en
+ aefaef 
+ eaf 
+ ae 
+ f 
+ aef 
+ a 
+ ef 
+ ae 
+ f 
+ tu 
+ tu 
+ tu 
+ tu 
+ tuil 
+ il 
+ il 
+ il 
+ il 
+ il 
+ tetha 
+ je crois 
+ yo 
+ je crois 
+ tetha 
+ st cool 
+ trop chouette 
+ tetha 
+ end 
+ ad 
+ adend 
+ adendquatre 
+ adendquatretrois 
+ adendquatretroisje suis marrant 
+ je suis marrant 
+ haha 
+ lol 
+ tu sais ? 
+ je sais 
+ jz 
+ jzje 
+ jzje 
+ jzje 
+ je 
+ tu vas bien ? 
+ tu es marrant 
+ haha 
+ chouettes 
+ chouettes 
+ chouettes 
+ chouettes 
+ ça marche pas ? 
+ trop marrant 
+ tetha 
+ d 
+ dquatre 
+ quatre 
+ mihrgizhg 
+ mihrgizhg 
+ mihrgizhg 
+ mihrgizhg 
+ mihrgizhg 
+ mihrgizhg 
+ mihrgizhgzrgzg 
+ mihrgizhgzrgzg 
+ t 
+ ze 
+  
+ salut 
+ jlhqf 
+ jlhqf 
+ yo 
+ qfqef 
+ go 
+ je 
+ yky 
+ luglu 
+ li 
+ ok 
+ prdon ? 
+ pardon 
+ tu es cool ! 
+ je sais 
+ haha 
+ hahahahahaha 
+ trop bien ! 
+ tetha 
+ je actions 
+ pardon ? 
+ hum, pourquoi pas 
+ pourquoi pas ? 
+ voiceon 
+ voiceon 
+ voiceoff 
+ voiceon 
+ voiceoff 
+ voiceon 
+ voiceon 
+ salut, tu vas bein politiquement 
+ salut je politique 
+ tetha 
+ onze 
+ douze 
+ treize 
+ quatre 
+ un 
+ deux 
+ trois 
+ seize 
+ voiceon 
+ quatorze 
+ salut 
+ voiceoff 
+ voiceon 
+ quatre 
+ voiceoff 
+ trois 
+ six 
+ voiceon 
+ politique je 
+ voiceoff 
+ politique 
+ politique 
+ politique 
+ politique 
+ salut 
+ salut 
+ cinq 
+ cinq 
+ salut 
+ voiceon 
+ voiceoff 
+ cinq 
+ six 
+ huit 
+ sept 
+ 1 
+ 2 
+ 3 
+ 4 
+ 5 
+ 6 
+ 1 
+ un 
+ deux 
+ trois 
+ quatre 
+ cinq 
+ six 
+ sept 
+ huit 
+ neuf 
+ dix 
+ onze 
+ douze 
+ treize 
+ quatorze 
+ quinze 
+ seize 
+ huit 
+ quinze 
+ seize 
+ dixsept 
+ huit 
+ quatorze 
+ dixsept 
+ huit 
+ trois 
+ quatorze 
+ deux 
+ quatre 
+ huit 
+ neuf 
+ dix 
+ quatre 
+ cinq 
+ six 
+ sept 
+ huit 
+ neuf 
+ dix 
+ onze 
+ onze 
+ dix 
+ sept 
+ huit 
+ neuf 
+ neuf 
+ dix 
+ huit 
+ onze 
+ seize 
+ quinze 
+ seize 
+ dix 
+ onze 
+ douze 
+ trois 
+ huit 
+ neuf 
+ sept 
+ six 
+ quatre 
+ six 
+ trois 
+ sept 
+ huit 
+ neuf 
+ dix 
+ onze 
+ douze 
+ treize 
+ quatorze 
+ quinze 
+ seize 
+ salut 
+ je 
+ je politique 
+ politique 
+ tetha 
+ voiceon 
+ fff 
+ voiceoff 
+ voiceoff 
+ salut 
+ salut 
+ je 
+ salut 
+ salut 
+ salut 
+ salut 
+ bonjour 
+ je 
+ salut 
+ salut 
+ salut 
+ salut 
+ je 
+ politique 
+ bonjour 
+ salut 
+ salut 
+ je 
+ bonjour 
+ je 
+ je politique 
+ salut 
+ ça va ? 
+ je politique 
+ salut 
+ bonjour 
+ yo 
+ coucou 
+ blablabla 
+ aefaefaf 
+ salut 
+ tetha 
+ tetha 
+ salut 
+ je 
+ je politique 
+ je 
+ tetha 
+ tetha 
+ tetha 
+ test 
+ salut 
+ politique 
+ salut 
+ rsursurs 
+ salut 
+ salut 
+ politique 
+ salut 
+ salut 
+ salut 
+ salut 
+ politique 
+ salut 
+ ok 
+ salut 
+ tu 
+ tu 
+ salut 
+ je 
+ tu vas bien ? 
+ tu vas bien ? 
+ tu es sur ? 
+ haha 
+ je crois tu tu dis n'importe quoi  
+ mais non... 
+ ah bah si 
+ mais, tu vas marcher ? 
+ bonjour 
+ comment vas tu ? 
+ as-tu une mémoire ? 
+ memoire 
+ science 
+ sciences 
+ math 
+ memoire 
+ memoire 
+ test 
+ test 
+ test 
+ memoire 
+ memoire 
+ je 
+ je politique 
+ politique 
+ memoire 
+ mathematiques 
+ science 
+ mathematiques 
+ geographie 
+ mathematiques 
+ mathematiques 
+ ok 
+ dhdghs 
+ mathematiques 
+ mathematiques 
+ ok 
+ mathematiques 
+ ok 
+ ok 
+ science 
+ math 
+ mathematiques 
+ math 
+ mathematiques 
+ physique 
+ tu aimes la physique 
+ tu aimes la chimie ? 
+ ok 
+ ok 
+ ah bon ? 
+ bon, tu marches pas... 
+ Et quoi si je te aprles de politique ? 
+ politique ? 
+ politique 
+ salut 
+ salut 
+ mathematiques 
+ mathematiques 
+ politique 
+ mathematiques 
+ salut 
+ mathematiques 
+ salut 
+ salut 
+ salut 
+ bonjour 
+ sefsf 
+ ok 
+ je 
+ je 
+ salut 
+ je 
+ je 
+ politique 
+ je 
+ je 
+ mathematiques 
+ je 
+ sjhstj 
+ je 
+ je 
+ mathematiques 
+ mathematiques 
+ salut 
+ salutation 
+ hello 
+ ok 
+ mathématiques 
+ voiceon 
+`;
+const cengt ="They took and imprisoned all the helpers that were in the heavens. And the angels themselves descended from the heaven to the earth. And when the two hundred demons saw those angels, they were much afraid and worried. They assumed the shape of men 3 and hide themselves. Thereupon the angels forcibly removed the men 4 from the demons. Put watchers over the giants. were sons. with each other in bodily union. With each other self and the schroddinger cat that had been born next to them. They forcibly removed them from the demons. And they led one half of them eastwards. And the other half westwards, on the skirts of four huge mountains, towards the foot of the Sumeru mountain, into thirty-two towns which the Living Spirit had prepared for them in the beginning. And one calls that place which is Aryān-waižan. And those men are or were in the first arts and crafts. They made the angels and to the demons, they went to fight. And those two hundred demons fought a hard battle with the four angels, until the angels used fire, naphtha, and brimstone. He went on to become a scrap metal dealer. The increasing death toll raises the unknown illness. Two heats were held, one with six swimmers and one with five swimmers. The swimmers with the eight fastest times advanced to the final. The process of the paper negative is still relevant, though, in the realm of alternative-process photography. These 24 children were to serve as the ruling elders over the millennium after the return of Christ. They sight two ships in the nearby harbour. The women's individual pursuit consists of a 3 km time trial race between two riders, starting on opposite sides of the track. If one rider catches the other, the race is over. There is no public access but the site can be viewed from footpaths. The community was a  saw mill town , centered on the activities, commerce and bustle generated by its saw mill. As timber was logged from nearby mountainsides the saw mill relocated to other areas deeper within the mountains. Rodney, which had never developed a population base or economic mainstay other than the mill, went out of existence. Har Nof is a terraced neighborhood on the slopes of a mountain that sits 813 meters above sea level. Due to the topography, many of the multi-storey apartment buildings have entrances on both sides of the building. One to reach the lower floors and another to reach the higher floors. Unlike his four brothers, he did not join the family company, but started his own shipbuilding company. An oak-panelled frame with 48 photographs and details of the service of all who served from the village during the war. It was the thirteenth appearance of the event. Established in 1988 and aimed at young adult male audience. In addition to this work on replicas. During his performance, Wallace cracked his whip and put his head inside the mouth of Augustus, his preferred lion. Prior to the school being built, there were originally proposals to build an open prison on the land. However, this was met by a lot of opposition from the surrounding communities and eventually the proposals were overruled and the decision was made to build a school instead. She is described as an ideal of simplicity, virtue and modesty. The movie switches back to the actual history of Ethiopia. The frozen pond's main obstacles are cracks in the ice which, if crossed over enough times, become holes that destroy toys that fall into them. The factory has obstacles such as conveyor belts, teleporters, and stoppers. Seventeen swimmers from ten nations competed. The original form, to which the name relates, was built of four logs. Hazardous Materials Response. Personnel must pass a polygraph test with questions including possible drug use. The current location is depicted in a static image. He later began a coaching career, and works in Poland since 2001. A German monument marks the site next to the TANZAM. In both the Italian and northern traditions the subject fitted well into existing genres showing lavish dining. The route parallels I-81 for all but the southernmost 2.5 miles (4.0 km) of its routing. As the entire work is derived from the opening materials.";
+const ccrg ="La ligne C fut construite en cinq phases. Le premier tronçon ouvrit en 1974, et l'ensemble de la ligne fut terminé en 2008. Tyng est une théoricienne renommée pour son travail à la pointe de la recherche architecturale et pour sa passion pour les mathématiques. Sa thése, intitulée  simultaneousness, randomness and order,  combinent ses intérêts. C'est un papillon blanc aux ailes d'apparence plumeuse, les antérieures en deux lobes, les postérieures en trois. En 1694, il critiqua violemment le calcul infinitésimal de Leibniz par son manque de fondement logique, même s'il reconnaissait que ce nouveau calcul conduisait souvent au bon résultat. Le bois semblait être la matière première des villageois, car il a servi à la construction des maisons et des ponts pour traverser la rivière blanche, seul le presbytère était construit en briques. Ce bâtiment est situé au 12 rue de l'Église à Westhalten. Le village possède approximativement une population de 200 habitants en 2006. Il subsiste un gros pavillon à deux étages, flanqué sur sa façade ouest d'une tour d'escalier circulaire hors œuvre à laquelle on accède par une porte rectangulaire encadrée par deux pilastres toscans portant un entablement décoré de triglyphes. Au-dessus de celle-ci, figure un cartouche dont les armoiries ont été bûchées. À 12 h 07, les premières flammes visibles apparaissent sur le bâtiment. À 12 h 55 le brasier a consumé la totalité du bâtiment. La thèse du suicide collectif est défendue par le FBI. Cette espèce est extrêmement variable, notamment au niveau des couleurs, et il existe plusieurs variétés ou espèces proches. André Breton a consacré au Teide quelques chapitres de son récit poétique L'Amour fou, publié en 1937. Généralement, on ne considère pas comme d'origine animale les produits fabriqués à partir d'organismes fossilisés ou décomposés, comme le pétrole. De même les cultures alimentées avec des restes d'animaux sont rarement caractérisées comme des produits d'origine animale. Distante de 4,2 millions d’années-lumière, elle est proche des frontières du Groupe local et il est possible qu’elle n’y soit finalement pas liée gravitationnellement. Selon l'usage des auteurs classiques de langue française, les désignations (55702) Thymœtès et (55702) Thymoétès peuvent également être acceptées. Les enfants, dès l'âge de 6 ans, ont connaissance de l'existence, du nom et de l'efficacité d'un nombre considérable d'armes à feu ; ils sont astreints à un entraînement paramilitaire intensif, mais ils ne connaissent pas ce qu'un enfant scolarisé et du même âge est supposé connaître. Ces jeux sont connus pour leur système de jeu simple, à la fois acclamé et tourné à la dérision par la critique. Le mode deux joueurs en coopération et les multiples personnages jouables sont aussi caractéristiques du genre. L'ouvrage est en cinq parties : la Goetia qui décrit 72 démons et le rituel pour les invoquer ; la Theurgia Goetia avec des esprits en partie bons et en partie mauvais ; l’Ars Paulina qui décrit les esprits et anges qui gouvernent les heures du jour et les signes du zodiaque, tels que supposément découverts par l'apôtre Paul après avoir été enlevé au ciel ; l’Ars Almadel (du nom de son présumé auteur arabe) qui décrit vingt esprits bienveillants du zodiaque ; et l’Ars Notoria, qui est un mélange de prières et de mots magiques permettant la communion avec Dieu et la connaissance des sciences humaine et divine (ce dernier texte est absent de certains manuscrits). Cette espèce vit dans la forêt atlantique, dans le sud-est du Brésil, le nord-est de l'Argentine, l'est du Paraguay et en Uruguay. L’organisation et la promotion de ces recherches nécessitent une administration rigoureuse, qui s’inspire de diverses institutions du passé. On parle de forme indéterminée pour la limite car, dans une situation de ce type, on peut être amené, après transformation, selon les cas, à conclure que la limite est nulle, ou bien est un réel non nul, ou bien est infinie ou bien même n'existe pas. Cette communauté survécut néanmoins par l'organisation laïque de l'enseignement religieux et du culte souvent sans messe, les prières étant désormais dites à la maison ou dans des chapelles.La Grande Rivière de Nippes prend sa source dans les contreforts de le massif de la Hotte. Ce sont des arbres ou des arbustes des régions tropicales d'Amérique, d'Asie du Sud-Est et de Malaisie. En 1388, le duc est tué à la bataille de Sempach et les Bernois s'emparent de Nidau. La nouvelle vague des sources volantes. Les Hofsteniidae sont une famille de l'embranchement des Acoela. La structure. Située la plus au sud, il s'agit de la plus haute tour de ce complexe. Il commence sa carrière militaire comme volontaire dans un régiment d'infanterie, après dix ans de service il devient lieutenant des dragons. Le village possède approximativement une administration rigoureuse, qui s’inspire de diverses institutions du genre. Cette structure. Parmi les autres attributs figurent la queue de taureau fixée. La thèse du zodiaque, tels que supposément découverts par l’organisation laïque de l’enseignement religieux et des ponts pour traverser la rivière blanche, seul le presbytère était construit en briques. Le premier tronçon ouvrit en 1937. Dans des cités fortifiées. Il subsiste un gros pavillon à deux pilastres toscans portant un gros pavillon à deux lobes, les esprits et la promotion de ces recherches nécessitent une administration rigoureuse, qui s’inspire de l’efficacité d’un nombre considérable d’armes à la dérision par la construction des couleurs, et de l’efficacité d’un nombre considérable d’armes à feu, ils sont aussi caractéristiques du genre. Vingt esprits et anges qui gouvernent les heures du jour et de la nuit en 1937. Il est composé de trois terrains dont le principal possède une capacité de 10000 places. Sur la droite, une colline s'élève avec un arbre sur sa pente. Une foule suit cette scène accompagné de soldats à cheval, un portant un bouclier marquée de trois lettres grecques, descendant de la ville par une porte voûtée ouverte dans les fortifications du haut du tableau. Plusieurs bâtiments de cette ville sont visibles, tours, campaniles, à toits rouges et murs blancs. Ce tournoi est un événement majeur dans le calendrier mondial du fait de son label « WTF-G1 ». D'un point de vue strictement matériel, cette solution hybride n'est pas différente d'un RAID logiciel. Elle diffère cependant sur l'emplacement des routines logicielles de gestion du RAID. Le fait que les messages soient archivés sur le serveur fait que l'utilisateur peut y accéder depuis n'importe où sur le réseau et que l'administrateur peut facilement faire des copies de sauvegarde. Après avoir travaillé à la ferme paternelle, puis dans une banque, il est devenu le chef d'entreprise d'une société locale indépendante de location de voitures avant de céder cette affaire. Selon les toutes premières constatations, les émeutes sont survenues après le décès par balles d'un homme âgé de 69 ans. La vidéo sort au format DVD le 20 janvier 2010 au Japon. Au niveau -1 se trouvent deux salles des guichets, séparés par un espace ouvert au-dessus des quais. De nouvelles réparations sont faites sur la toiture et le clocher à la suite de dégâts provoqués par la foudre en mai 2009.";
+const cfgr ="La Grande Rivière de Nippes prend sa source dans les contreforts de le massif de la Hotte. Ce sont des arbres ou des arbustes des régions tropicales d'Amérique, d'Asie du Sud-Est et de Malaisie. En 1388, le duc est tué à la bataille de Sempach et les Bernois s'emparent de Nidau. La nouvelle vague des sources volantes. Les Hofsteniidae sont une famille de l'embranchement des Acoela. La structure. Située la plus au sud, il s'agit de la plus haute tour de ce complexe. Il commence sa carrière militaire comme volontaire dans un régiment d'infanterie, après dix ans de service il devient lieutenant des dragons. Le village possède approximativement une administration rigoureuse, qui s’inspire de diverses institutions du genre. Cette structure. Parmi les autres attributs figurent la queue de taureau fixée. La thèse du zodiaque, tels que supposément découverts par l’organisation laïque de l’enseignement religieux et des ponts pour traverser la rivière blanche, seul le presbytère était construit en briques. Le premier tronçon ouvrit en 1937. Dans des cités fortifiées. Il subsiste un gros pavillon à deux pilastres toscans portant un gros pavillon à deux lobes, les esprits et la promotion de ces recherches nécessitent une administration rigoureuse, qui s’inspire de l’efficacité d’un nombre considérable d’armes à la dérision par la construction des couleurs, et de l’efficacité d’un nombre considérable d’armes à feu, ils sont aussi caractéristiques du genre. Vingt esprits et anges qui gouvernent les heures du jour et de la nuit en 1937. Il est composé de trois terrains dont le principal possède une capacité de 10000 places. Sur la droite, une colline s'élève avec un arbre sur sa pente. Une foule suit cette scène accompagné de soldats à cheval, un portant un bouclier marquée de trois lettres grecques, descendant de la ville par une porte voûtée ouverte dans les fortifications du haut du tableau. Plusieurs bâtiments de cette ville sont visibles, tours, campaniles, à toits rouges et murs blancs. Ce tournoi est un événement majeur dans le calendrier mondial du fait de son label « WTF-G1 ». D'un point de vue strictement matériel, cette solution hybride n'est pas différente d'un RAID logiciel. Elle diffère cependant sur l'emplacement des routines logicielles de gestion du RAID. Le fait que les messages soient archivés sur le serveur fait que l'utilisateur peut y accéder depuis n'importe où sur le réseau et que l'administrateur peut facilement faire des copies de sauvegarde. Après avoir travaillé à la ferme paternelle, puis dans une banque, il est devenu le chef d'entreprise d'une société locale indépendante de location de voitures avant de céder cette affaire. Selon les toutes premières constatations, les émeutes sont survenues après le décès par balles d'un homme âgé de 69 ans. La vidéo sort au format DVD le 20 janvier 2010 au Japon. Au niveau -1 se trouvent deux salles des guichets, séparés par un espace ouvert au-dessus des quais. De nouvelles réparations sont faites sur la toiture et le clocher à la suite de dégâts provoqués par la foudre en mai 2009.";
+const action =`*la Mustang
+*puis retournai m de la bre de Samira.  
+*avec la plus grande facilité grace mon trousseau 
+*de ma de temps qu'avec une clef normale,
+*jouvris la porte urquoi
+*En embrassant du regard le désordre de la chambre 
+*je me dis qu'elle avait été fouillée.
+*Mais en ne vous nant de plus pres,
+*je compris que Samira faisait tout acont simplement partie de ces gens *ui sont incapabl reen de ranger quoi que ce soit.
+*Petites culottes,  collants xt le fau corsages,  chaussures,  peignoirs 
+*ain et que sais hais swous devr ore étaient éparpillés un peu partout. 
+*trouvai deux grandes valises et un sac de voyage que vous a dans un placard 
+*J'entrepris,  en prenant mon cou.  que rage deux mains,  de rassembler *out le fourbi de cacompagnie Samira pour en faire quelque chose qui *essemblea at bien le des bagages.
+*Au bout d'un moment,  je me deman trhais.  Mais les vetements,  en zélée *emme de chambre,  e lucertitude ét moyennant une solide pression sur le *ouverele ie rxessus deli boucler le tout.
+*bagages est Sam de Samira sur le siege arriere de ma voiture omme our *lle aller régler ma note la réception,  Dan fallait passer devant la paraissai *ha On avait meme piscine.
+*L'endroit danger,  n réduit l'éclairage.
+*alors qu'un mon attention.
+*Je tournai en lui r bord Un homme en de bain était assi sur du bassin 
+*du coté du grand bain S'il pas agité ses pieds dans l'eau,
+*j'aurais poursu route sans meme le remarquer.
+*Il y av ue chose m'était familier dans sill eauco tiste,
+*C'était un
+*tu es en danger de mort
+*il a une route toute tracée
+*elle avait un
+*on est un
+*vous êtes bien
+*ils ont la pression
+*elles ont simplement un chat
+`;
+
+</script>
+
+<script type='text/javascript'>
+	
+//////////VARIABLES DECLARATION/////////////////
+	
+window.onload=loadDataBase ();
+setInterval(render, 1300);       //// Looper-Timer of the render
+var formule=0;
+var code = "stop";				//// Default entry value
+var functName = "";
+var num=0;
+var loop=0;
+var memoryLoad=0;
+var memory = "";
+var compose=[];
+var entryFlashMemo = "";
+var pronom = ["je"];
+var voiceOn = false;
+var language = "fr";
+var Floppist = 0;
+
+var title = "";
+
+var Defaultx = defaultx;
+var Action = action;
+var Peinture = peinture;
+var Prisonnier = prisonnier;
+var Ccrg= ccrg;
+var Cengt = cengt;
+
+var strange = Defaultx;
+var sentence = "";
+const oMKV = new MKVclass.MKV();
+
+function soundsound() {
+//~ var a = Math.floor(Math.random()*20+1);
+//~ var audio = document.getElementById("Audio"+a); 
+//~ audio.play();	
+
+	}
+
+function bim(ok){  // >>>>>>>>>>Reception And processing User entry
+
+	
+//// ok = user brut entry
+
+view.value+= JSON.stringify (">>>>>>>>>>>>>>>>>>>>>>>>>>>>   "+ ok.toUpperCase(), "\t")+"\n";	
+if(view.value.length>5000){ view.value=view.value.slice(-5000); }
+view.scrollTop=9e9;	
+
+entryFlashMemo=ok;					//Stock User brut entry in flash memory (one string only)
+memorySend();						//Stock User Brut entry to archive memory (php and text file - data.txt)
+var ok = ok.toLowerCase();
+var changes;						
+ok.normalize("NFD").replace(/\p{Diacritic}/gu, "")
+entryFlashMemo=ok;
+
+
+strange = Defaultx;
+
+var test = "";
+var interrogation = ok.match (/[?]/i);
+var exclamation = ok.match (/[!]/i);
+var affirmation = ok.match (/[.]/i);
+var je = ok.match (/(\bje\b)/g);
+var tu = ok.match (/(\btu\b)/g);
+var il = ok.match (/(\bil\b)/g);
+var elle = ok.match (/(\belle\b)/g);
+var on = ok.match (/(\bon\b)/g);
+var nous = ok.match (/(\bnous\b)/g);
+var vous = ok.match (/(\bvous\b)/g);
+var ils = ok.match (/(\bils\b)/g);
+var elles = ok.match (/(\belles\b)/g);
+
+var tutoiement = ok.match (/(\bte\b|\bton\b|\bta\b|\btes\b)/g);
+var vouvoiement = ok.match (/(\bvos\b|\bvôtre\b|\bvotre\b)/g);
+var nounoiement = ok.match (/(\bnos\b|\bnotre\b|\bnôtre\b)/g);
+var salutation = ok.match (/(\bbonjour\b|\bsalut\b|\bhello\b|\bhallo\b|\byo\b|\bouech\b|\bcoucou\b|\bhi\b)/g);
+var memoire = ok.match (/(\bmémoire\b|\bsouvenir\b|\bremember\b|\bpassé\b|\blongtemps\b|\bancient\b|\bsouviens\b|\souvient\b)/g);
+var acquiesce = ok.match (/(\bok\b|\boui\b|\baccord\b|\bokay\b|\byes\b|\byep\b|\ouech\b)/g);
+var refuse = ok.match (/(\bok\b|\boui\b|\baccord\b|\bd'accord\b|\bokay\b|\byes\b|\byep\b|\ouech\b)/g);
+var content = ok.match (/(\bcontent\b|\bcontente\b|\bsuper\b|\bcool\b|\bchouette\b|\bgénial\b|\byoupi\b|\bamaising\b|\bgenial\b|\bgénial\b|\blol\b|\bdroledrôle\b|\bmarrant\b|\brigolo\b|\bbien\b|\bmdr\b|\blol\b|\bloool\b|\blool\b|\bptdr\b|\bhaha\b|\bhahaha\b|\bhahahaha\b|\bxptdr\b)/g);
+var insulte = ok.match (/(\bmécontent\b|\bmerde\b|\bchier\b|\bputain\b|\bbatard\b|\bconard\b|\bconnard\b|\bmerde\b|\bpute\b|\bsalaud\b|\bsalope\b|\benfoiré\b|\bbite\b|\bpute\b|\bprout\b|\bchiotte\b|\bchiottes\b|\bputes\b|\bcaca\b|\bpipi\b|\bchiotte\b|\bsalopard\b|\bemmerde\b)/g);
+var couleur = ok.match (/(\bcouleur\bbleu\b|\bvert\b|\bjaune\b|\brouge\b|\borange\b|\bvert\b|\bviolet\b|\bmarron\b|\bnoir\b|\bblanc\b|\bcyan\b|\bmagenta\b|\bverdatre\b|\bbleuatre\b|\bjaunatre\b|\bviolace\b|\brougeatre\b|\bcouleurs\b|\bcouleure)/g);
+var action = ok.match (/(\bactions\b)/g);
+var philosophie = ok.match (/(\bphilosophie\b|\bplaton\b|\bfoucault\b|\bspinoza\b)/g);
+var geographie = ok.match (/(\bgeographie\b)/g);
+var mathematiques = ok.match (/(\bmathematiques\b)/g);
+var position = ok.match (/(\blieu\b|\bposition\b|\blocation\b)/g);
+var pensée = ok.match (/(\bpenser\b|\breflechir\b)/g);
+var connaissance = ok.match (/(\bconnaissance\b|\bconnaitre\b|\bsavoirs\b)/g);
+var sport = ok.match (/(\bbox\b|\bjudo\b|\bfoot\b|\bcross\b|\bsprint\b|\btennis\b|\bfootball\b|\bgolf\b|\bcricquet\b|\bequitation\b|\bsquattch\b|\bping-pong\b|\bkarate\b|\bkung-fu\b|\bquidditch\b)/g);
+var nature = ok.match (/(\bnature\b|\barbres\b|\bplantes\b|\bvegetation\b|\bfruits\b|\bfeuilles\b|\bbranches\b|\bforet\b)/g);
+var maladie = ok.match (/(\bmalade\b|\brhume\b|\btousse\b|\btoux\b|\bangine\b|\bmoucher\b|\beternuer\b)/g);
+var meteo = ok.match (/(\bpluie\b|\bneige\b|\bvent\b|\bsoleil\b|\bmeteo\b)/g);
+var temps = ok.match (/(\bjour\b|\bheure\b|\bminute\b|\bseconde\b|\bpassé\b|\bfutur\b|\bpassés\b|\bfuturs\b|\btemps\b)/g);
+var expression = ok.match (/(\bparole\b|\blangue\b|\blangage\b|\blange\b|\bexprimer\b|\bparler\b|\bdire\b|\bdit\b|\braconter\b|\braconté\b)/g);
+var informatique = ok.match (/(\binformatique\b|\bordinateur\b|\brobots\b|\bordinateurs\b|\binformaticiens\b|\binformaticien\b|\blogiciel\b|\blogiciels\b|\bsoftware\b|\bcode\b|\bboots\b|\bboot\b|\bprogramme\b)/g);
+var physique = ok.match (/(\bquantique\b|\bphysique\b|\bchimie\b|\blaboratoire\b|\bflacons\b|\bbescher\b|\bmolecule\b|\bparticule\b|\bparticules\b|\bmolecules\b)/g);
+var politique = ok.match (/(\bpolitique\b|\bpolitiques\b|\bpoliticien\b|\bpoliticiens\b|\belections\b|\belection\b|\bmaire\b|\bdelegue\b|\bdelegues\b|\bdepute\b|\bdeputes\b)/g);
+var religion = ok.match (/(\bdieu\b|\breligion\b|\bchristiannisme\b|\bchretien\b|\bchretiens\b|\bislamisme\b|\bislam\b|\bislamiste\b|\bmusulman\b|\bmusulmane\b|\bmusulmans\b|\bmusulmanes\b|\bchretienne\b|\bchretiennes\b|\beglise\b|\beglises\b|\bmosquee\b|\bmosquees\b|\bboudhisme\b|\bboudhiste\b|\bcroyant\b|\bcroyante\b|\bdieux\b|\bdeesses\b|\bdemons\b|\bincube\b|\bincubes\b|\bsuccubes\b|\bsuccube\b|\bdiable\b|\bsatan\b|\bange\b)/g);
+var transports = ok.match (/(\bbateau\b|\bavion\b|\bavions\b|\bbateaux\b|\bvoiture\b|\bvoitures\b|\btrain\b|\btrains\b|\bbus\b|\bautobus\b|\bautocar\b|\bvelo\b|\bvelos\b|\btrotinette\b|\brollers\b|\broller\b|\btrotinettes\b|\bscooter\b|\bmoto\b|\bmotos\b)/g);
+var famille = ok.match (/(\bfamille\b|\bfamilles\b|\bfamilial\b|\bfamiliales\b|\bmaman\b|\bpapa\b|\btonton\b|\btata\b|\bfere\b|\bsoeur\b|\bcousin\b|\bcousine\b|\bgrand-pere\b|\bgrand-mere\b|\bpere\b|\bmere\b|\bneuveu\b|\bneuveux\b|\bfilleule\b|\bfilleules\b)/g);
+var noms = ok.match (/(\bnom\b|\bnoms\b|\bnommer\b|\bnomme\b|\bnommes\b|\bnommant\b|\bappeler\b|\bappelles\b|\bprenom\b|\bsurnom\b)/g);
+var arts = ok.match (/(\bcinema\b|\bpeinture\b|\bcinéma\b|\bcinémas\b|\bpeintures\b|\bpeinturluré\b|\bpeinturlurée\b|\bfilm\b|\bfilms\b|\bmovie\b|\bchant\b|\bchants\b|\bmusique\b|\bmusiques\b|\bdansces\b|\bdance\b|\btheatre\b|\bthéâtre\b|\bthéâtres\b|\bthéatres\b)/g);
+
+if (je != null) { pronom.push("tu"); compose.push("pronom");};
+if (tu != null) { pronom.push("je");compose.push("pronom");};
+if (il != null) { pronom.push("il");compose.push("pronom");};
+if (elle != null) { pronom.push("elle"); compose.push("pronom");};
+if (on != null) { pronom.push("on"); compose.push("pronom");};
+if (nous != null) { pronom.push("vous"); compose.push("pronom");};
+if (vous != null) { pronom.push("nous"); compose.push("pronom");};
+if (ils != null) { pronom.push("ils"); compose.push("pronom");};
+if (elles != null) { pronom.push("elles"); compose.push("pronom");};
+
+if (salutation != null) { compose.push("salutation");};
+if (interrogation != null) {compose.push("interrogation");};
+if (exclamation != null) {compose.push("exclamation");};
+if (tutoiement != null) {compose.push("tu");};
+if (vouvoiement != null) {compose.push("vous");};
+if (nounoiement != null) {compose.push("nous");};
+if (memoire != null) {compose.push("memoire");strange= Ccrg;};
+if (acquiesce != null) {compose.push("acquiesce");};
+if (refuse != null) {compose.push("refuse");};
+if (content != null) {compose.push("content");};
+if (insulte != null) {compose.push("insulte");};
+if ( couleur != null) {compose.push("couleur");strange= Peinture;}; 
+if ( action != null) {compose.push("action"); strange= Action;}; 
+if ( philosophie != null) {compose.push("philosophie");}; 
+if ( geographie != null) {compose.push("geographie");strange= Ccrg;}; 
+if ( mathematiques != null) {compose.push("mathematiques");strange= Ccrg;}; 
+if ( position != null) {compose.push("position");};
+if ( pensée != null) {compose.push("pensée");}; 
+if ( connaissance != null) {compose.push("connaissance");}; 
+if ( sport != null) {compose.push("sport");}; 
+if ( nature != null) {compose.push("nature");}; 
+if ( maladie != null) {compose.push("maladie");}; 
+if ( temps != null) {compose.push("temps");}; 
+if ( expression != null) {compose.push("expression");}; 
+if ( informatique != null) {compose.push("informatique");}; 
+if ( physique != null) {compose.push("physique");strange= Ccrg;}; 
+if ( politique != null) {compose.push("politique");strange= Prisonnier;}; 
+if ( religion != null) {compose.push(religion);}; 
+if ( transports != null) {compose.push("transports");}; 
+if ( famille != null) {compose.push("famille");}; 
+if ( noms != null) {compose.push("noms");}; 
+if ( arts != null) {compose.push("arts");strange= Peinture;}; 
+
+
+///// If a composition is detected, set the looper "on" in the render funtion
+///// Else (for example simples keywords or empty entry) keep the entry
+
+if (compose.length != 0) {
+	console.log('catch something: '+compose);
+	code = "looper";
+	}
+	
+	else {code=ok;}
+	
+	
+	render();
+
+document.getElementById("myForm").reset();
+Floppist = 19;	
+	};
+
+commands={  //>>>>>>>>>>>>>>Answer List
+
+ flashback: function(){memoryLoad=0; return "Attend, je me souviens, tu as bien dit "+memory+" tout à l'heure ?";},
+ memoire: function(){memoryLoad=0; return "Attend, je me souviens, tu as bien dit "+memory+" tout à l'heure ?";},
+
+    interrogation:function(){
+	 	var solutions = [
+   "Oui.",   "Non.",   "C'est ainsi.",   "Je ne peux pas connaître la réponse.",   "Le chemin est long pour savoir.",   "Je ne sais pas, voilà."
+    ]
+	x=0
+	random=Math.floor(Math.random()*solutions.length);
+	while (x<random) {x++;}
+	return solutions[x]
+ }, 
+    exclamation:function(){
+	 	var solutions = [
+   "Incroyable.",
+   "Terrible.",
+   "Démentiel.",
+   "Surprenant.",
+   "Admirable.",
+   "Sensationnel."
+    ]
+	x=0
+	random=Math.floor(Math.random()*solutions.length);
+	while (x<random) {x++;}
+	return solutions[x]
+ },	
+    salutation: function(){ 
+	 	 	var solutions = [
+   "Bonjour",
+   "Hello",
+   "Enchanté",
+   "Ravis de faire votre conaissance."
+    ]	
+	x=0
+	random=Math.floor(Math.random()*solutions.length);
+	while (x<random) {x++;}
+	return solutions[x]
+ },
+    salutationinterrogation: function(){
+	 	 	 	var solutions = [
+   "Bonjour, quelle curiosité !",
+   "Non, mais bonjour",
+   "Oui, bonjour.!",
+   "Bonjour, peut-être !",
+   "Hello, pardon ?",
+   "Enchanté, je ne sais pas.",
+   "Quel honneur de se rencontrer pour se poser déjà ce genre de questions."
+    ]	
+	x=0
+	random=Math.floor(Math.random()*solutions.length);
+	while (x<random) {x++;}
+	return solutions[x]
+ },	
+    tu: function(){
+	 	 	 	var solutions = [
+   "Et toi ?",
+   "Toi aussi !",
+   "Peut être que tu le penses vraiment..."
+    ]	
+	x=0
+	random=Math.floor(Math.random()*solutions.length);
+	while (x<random) {x++;}
+	return solutions[x]
+ },	
+    nous: function(){
+	 	 	 	var solutions = [
+   "Comment ça ?",
+   "Lorsque tu dis ça... ",
+   "Ensemble...",
+   "On va bien voir..."
+    ]
+	 	 	 	var combi1 = [
+   "Je n'étais pas là !",
+   "Tu penses à toi non ?",
+   "J'aurais tant aimé.",
+   "C'est ce qui est passionnant."
+    ]	
+	
+	x=0
+	random=Math.floor(Math.random()*solutions.length);
+	y= Math.floor(Math.random()*solutions.length);
+	while (x<random) {x++;}
+	return solutions[x]+" "+combi1[y]
+ },	
+    vous: function(){
+	 	 	 	var solutions = [
+   "C'était incroyable.",
+   "Ah, je crois ne pas pouvoir en parler.",
+   "Oui.",
+   "Non."
+    ]
+	
+	
+	x=0
+	random=Math.floor(Math.random()*solutions.length);
+	while (x<random) {x++;}
+	return solutions[x]
+ },	
+    acquiesce: function(){
+	 	 	 	var solutions = [
+   "Super !",
+   "Ok !",
+   "Bien.",
+   
+    ]
+	
+	
+	x=0
+	random=Math.floor(Math.random()*solutions.length);
+	while (x<random) {x++;}
+	return solutions[x]
+ },	
+    refuse: function(){
+	 	 	 	var solutions = [
+   "Dommage.",
+   "Ah, tant pis.",
+   "Pas de bol.",
+   "..."
+    ]
+	
+	
+	x=0
+	random=Math.floor(Math.random()*solutions.length);
+	while (x<random) {x++;}
+	return solutions[x]
+ },	
+    content: function(){
+	 	 	 	var solutions = [
+   "<3."
+    ]
+	
+	
+	x=0
+	random=Math.floor(Math.random()*solutions.length);
+	while (x<random) {x++;}
+	return solutions[x]
+ },	
+    insulte: function(){
+	 	 	 	var solutions = [
+   "Vilain.",
+   "Gueux",
+   "Mécréant.",
+   "Fuck."
+    ]
+	
+	
+	x=0
+	random=Math.floor(Math.random()*solutions.length);
+	while (x<random) {x++;}
+	return solutions[x]
+ },	
+
+
+//// Direct keywords and answer
+//// commands can be added by filling :
+//// .... : function(){return ".....";},
+ je : function(){return "tu";}, 
+  tu : function(){return "je";}, 
+   il : function(){return "il";}, 
+    elle : function(){return "elle";}, 
+     on : function(){return "on";}, 
+      nous : function(){return "vous";}, 
+       vous : function(){return "nous";}, 
+        ils : function(){return "ils";}, 
+         elles : function(){return "elles";}, 
+
+ couleur : function(){return "couleur";}, 
+ action : function(){return "action";}, 
+ philosophie : function(){return "philosophie";}, 
+ geographie : function(){return "geographie";}, 
+ mathematiques : function(){return "mathematiques";}, 
+ position : function(){return "position";},
+ pensée : function(){return "pensée";}, 
+ connaissance : function(){return "connaissance";}, 
+ sport : function(){return "sport";}, 
+ nature : function(){return "nature";}, 
+ maladie : function(){return "maladie";}, 
+ temps : function(){return "temps";}, 
+ expression : function(){return "expression";}, 
+ informatique : function(){return "informatique";}, 
+ physique : function(){return "physique";}, 
+ politique : function(){return "politique";}, 
+ religion : function(){return "religion";}, 
+ transports : function(){return "transports";}, 
+ famille : function(){return "famille";}, 
+ noms : function(){return "noms";}, 
+ arts : function(){return "arts";}, 
+ 한국의 : function(){return "한국의, Couette, tu parles Coréen !";},
+ voiceon : function(){voiceOn = true; return "voiceOn";},
+ voiceoff : function(){voiceOn = false; return "voiceOff";},
+ english : function(){language = "en"; return ">>>>>>>>>>>>>>>>>>>>>>>>>> |---| Language set to English. |---|";},
+ francais : function(){language = "fr"; return ">>>>>>>>>>>>>>>>>>>>>>>>>> |---| Choix de la langue Française. |---|";},
+ 
+////Complex answers (including audio or multiline)  	
+ load: function(){var audio = document.getElementById("Audio1");audio.play(); return "Loading..."; },
+ end: function(){var audio1 = document.getElementById("Audio1");audio1.pause(); var audio2 = document.getElementById("Audio2"); audio2.play();return "Ending...";},
+ un: function(){var audio = document.getElementById("Audio1"); audio.play();return "/";},
+ deux: function(){var audio = document.getElementById("Audio2"); audio.play();return "//";},
+ trois: function(){var audio = document.getElementById("Audio3"); audio.play();return "///";},
+ quatre: function(){var audio = document.getElementById("Audio4"); audio.play();return "////";},
+ cinq: function(){var audio = document.getElementById("Audio5"); audio.play();return "///\/";},
+ six: function(){var audio = document.getElementById("Audio6"); audio.play();return "////\\";},
+ sept: function(){var audio = document.getElementById("Audio7"); audio.play();return "///\\\/";},
+ huit: function(){var audio = document.getElementById("Audio8"); audio.play();return "//\\\\//";},
+ neuf: function(){var audio = document.getElementById("Audio9"); audio.play();return "/\\\\\///";},
+ dix: function(){var audio = document.getElementById("Audio10"); audio.play();return "///\\\\\\/";},
+ onze: function(){var audio = document.getElementById("Audio11"); audio.play();return "////\\/\\\\";},
+ douze: function(){var audio = document.getElementById("Audio12"); audio.play();return "\\\\////\\\\";},
+ treize: function(){var audio = document.getElementById("Audio13"); audio.play();return "\\\\//\//\\\\";},
+ quatorze: function(){var audio = document.getElementById("Audio14"); audio.play();return "////\\\\\\\\\\";},
+ quinze: function(){var audio = document.getElementById("Audio15"); audio.play();return "///////////////";},
+ seize: function(){var audio = document.getElementById("Audio16"); audio.play();return "\\\\\/\/\/\/\\\\";},
+ dixsept: function(){var audio = document.getElementById("Audio17"); audio.play();return "\\\\/\/\/\/\/\\\\";},
+ dixhuit: function(){var audio = document.getElementById("Audio18"); audio.play();return "\\\/\/\/\/\/\/\\\\";},
+ dixneuf: function(){var audio = document.getElementById("Audio19"); audio.play();return "/\\\\\/\/\/\//\\\\";},
+ vingt: function(){var audio = document.getElementById("Audio20"); audio.play();return "\\\\\/\/\/\/\/\/\\";},
+ vingtetun: function(){var audio = document.getElementById("Audio21"); audio.play();return "\\\\\/\/\/\/\/\/\/\\";},
+
+
+ clear: function(){view.value="..."; memory=0;var formule=0;var code = "stop";var functName = "";var num=0;var loop=0;var memoryLoad=0;var memory = "";var compose=[];var entryFlashMemo = "";},
+ false: function(){return "><><><><><><><><><><><><><><><><><><><><><><><><";},
+ date:	function(){view.value="";return new Date().toISOString(); },
+ bingo: function(){view.value="";return "$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$";},
+ wait: function(){
+	 view.value+= JSON.stringify("--------------------", null, "\t")+"\n"; 
+	 view.value+= JSON.stringify("---------------------", null, "\t")+"\n";
+	 view.value+= JSON.stringify("<<<<<<<<<<>>>>>>>>>>>>", null, "\t")+"\n";
+	 view.value+= JSON.stringify("----------------------", null, "\t")+"\n";
+	 view.value+= JSON.stringify("[[[[[[[[[[[[[[[[[[[[[[[", null, "\t")+"\n";
+	 view.value+= JSON.stringify("         OOO           ", null, "\t")+"\n";
+	 view.value+= JSON.stringify("<<<<<<<<<<<>>>>>>>>>>>>>", null, "\t")+"\n";
+	 view.value+= JSON.stringify("--------------------", null, "\t")+"\n";
+	 view.value+= JSON.stringify("---------------", null, "\t")+"\n";
+	 view.value+= JSON.stringify("-----------", null, "\t")+"\n";
+	 view.value+= JSON.stringify("------", null, "\t")+"\n"; 
+	 },
+
+ tetha: function(){view.value=""; functName="tetha"; num=1; loop=1; return "=============";},
+ tetha1: function(){functName="tetha"; num++; loop=1;return "===============";},
+ tetha2: function(){functName="tetha"; num++; loop=1;return "---------------";},
+ tetha3: function(){functName="tetha"; num++; loop=1;return "===============";},
+ tetha4: function(){functName="tetha"; num++; loop=1;return "====================";},
+ tetha5: function(){functName="tetha"; num++; loop=1;return "<<<<<<<<<<<THETA>>>>>>>>>>>>>>>>";},
+ tetha6: function(){functName="tetha"; num++; loop=1;return "======================";},
+ tetha7: function(){functName="tetha"; num++; loop=1;return "================";},
+ tetha8: function(){functName="tetha"; num++; loop=1;return "---------------------";},
+ tetha9: function(){functName="tetha"; num++; loop=1;return "=======================";},
+ tetha10: function(){functName="tetha"; num++; loop=1;return "================";},
+ tetha11: function(){functName="tetha"; num++; loop=1;return "~ 01";},
+ tetha12: function(){functName="tetha"; num++; loop=1;return "   ";},
+ tetha13: function(){functName=""; num=0; loop=0; return "\\\ENDS THETA///";},
+ 
+ help: function(){view.value=""; functName="help"; num=1; loop=1; return "\\\\< START HELP >////";},
+ help1: function(){functName="help"; num++; loop=1;return "* < help is help >";},
+ help2: function(){functName="help"; num++; loop=1;return "* < tetha is tetha >";},
+ help3: function(){functName="help"; num++; loop=1;return "* < english is anglais >";},
+ help4: function(){functName="help"; num++; loop=1;return "* < francais is french >";},
+ help5: function(){functName="help"; num++; loop=1;return "* < date is date >";},
+ help6: function(){functName="help"; num++; loop=1;return "* < quatorze is trois plus onze >";},
+ help7: function(){functName="help"; num++; loop=1;return "* < cinq is less than six >";},
+ help8: function(){functName="help"; num++; loop=1;return "* < quinze is after sept >";},
+ help9: function(){functName="help"; num++; loop=1;return "* < bingo ! >";},
+ help10: function(){functName="help"; num++; loop=1;return "* < wait is a test >";},
+ help11: function(){functName="help"; num++; loop=1;return "* < test was a test >";},
+ help12: function(){functName="help"; num++; loop=1;return "* < 한국의 is 한국의 >";},
+ help13: function(){functName=""; num=0; loop=0; return "\\\ENDS HELP///";},
+ 
+ 
+ 
+ 
+ 
+ alpha: function(){view.value=""; functName="alpha"; num=1; loop=1; return ">>>>>>>>>>>>>>>>>";},
+ alpha1: function(){functName="alpha"; num++; loop=1;return "<<<<<<<<<<<<<<<<<<<<<";},
+ alpha2: function(){functName="alpha"; num++; loop=1;return "................Loading_Alpha";},
+ alpha3: function(){functName="alpha"; num++; loop=1;return ">>>>>>>>>>>>>>>>>>>>>>>";},
+ alpha4: function(){functName="alpha"; num++; loop=1;return "<<<<<<<<<<<<<<<<<<<<<<<<<";},
+ alpha5: function(){functName="alpha"; num++; loop=1;return "<<<<<<<<<<<Alpha_is_Loaded>>>>>>>>>>>>>>>>";},
+ alpha6: function(){functName="alpha"; num++; loop=1;return "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA";},
+ alpha7: function(){functName="alpha"; num++; loop=1;return "<<<<<<<<<<<<<<<<<<<OOOOOOOOOOOOOOO>>>>>>>>>>>>>>>>>>>>>";},
+ alpha8: function(){functName="alpha"; num++; loop=1;return " ";},
+ alpha9: function(){functName="alpha"; num++; loop=1;return "0123467890";},
+ alpha10: function(){functName="alpha"; num++; loop=1;return "||||||||||||||||||||||||||||||||||||||||";},
+ alpha11: function(){functName="alpha"; num++; loop=1;return "||||||||||||||||||||||||||||||||||||||||";},
+ alpha12: function(){functName="alpha"; num++; loop=1;return "||||||||||||||||||||||||||||||||||||||||";},
+ alpha13: function(){functName=""; num=0; loop=0; return "||||||||||||||||||||||||||||||||||||||||";},
+
+	looper : function(){var ok = pronom[pronom.length-1]; return joey(ok);}
+
+}
+
+function render(){   //>>>>>>>>>>>>>>Loop Event Rendering and choosing Answer
+	
+//var res = code.split(" ")
+	hist.appendChild(new Option(code));
+	var rez="";
+	try{ 
+			rez=eval("with(commands){"+(code||'')+"}");
+		
+	}catch(y){
+		rez="";
+	}
+
+	if(typeof rez==='function'){ rez=rez();} else {code="stop"}
+	if (code != "stop") {
+			document.getElementById("view").style.color= "black";
+			setTimeout(function() {document.getElementById("view").style.color= "white";}, 50);
+			view.value+= JSON.stringify(rez, "\t")+"\n";	
+	        if(view.value.length>5000){ view.value=view.value.slice(-5000); }
+			view.scrollTop=9e9;	
+				
+///////////////////////////SPEECH SYNTHESIS////////////////////////////////////////
+if (voiceOn == true) {
+var synth = window.speechSynthesis;
+
+var voices = synth.getVoices();
+
+
+var inputTxt = rez;
+  var utterThis = new SpeechSynthesisUtterance(inputTxt);
+  
+      utterThis.voice = voices[2];
+  utterThis.rate = 0.5;
+  synth.speak(utterThis);
+    utterThis.onpause = function(event) {
+    var char = event.utterance.text.charAt(event.charIndex);
+    console.log('Speech paused at character ' + event.charIndex + ' of "' +
+    event.utterance.text + '", which is "' + char + '".');
+  }
+}
+///////////////////////////////////////////////////////////////////////////////////////
+
+
+		    if (loop = 0) {if (code != "stop") { document.getElementById("myForm").reset(); code="stop";}} else {code=functName+num;}
+		    document.getElementById("myForm").reset();
+		} //~ else {var audio = document.getElementById("Voice"); audio.play();}
+		
+///////////////////////////////////////////////////////////////////////////////////////	
+	if (Floppist>13) { Floppist= Floppist-1; console.log(Floppist);} else {Floppist = Math.floor(Math.random()*12+1);console.log(Floppist);;} ;
+    var Aplpha = Floppist;
+    
+    if (Aplpha == 4) {
+    const oMKV = new MKVclass.MKV();
+	oMKV.setMaxLength ( 1 );
+	oMKV.setChainLength (2 );
+	if (language == "en") { oMKV.add ( Cengt ); } else {oMKV.add ( strange );}
+	sentences = oMKV.getSentences (1);
+	view.value+= JSON.stringify(sentences, "\t")+"\n";
+	if(view.value.length>5000){ view.value=view.value.slice(-5000); };
+	view.scrollTop=9e9;	
+	compose = [];
+	pronom = []; 
+	soundsound();
+	}
+///////////////////////////////////////////////////////////////////////////////////////
+
+}
+
+function salut() {  //>>>>>>>>>>>>>>>>>>Error or Invalid Entry Event (Default)
+
+			document.getElementById("view").style.color= "black";
+			setTimeout(function() {document.getElementById("view").style.color= "white";}, 50);
+	if (code == "bien et toi ?"){return "Super, je me sent tout à fait anthropomorphique aujourd'hui !";}
+	
+	else {
+		
+//>>>>>>>>>>>>>>> Default answers to empty or non catched keywords
+//>>>>>>>>>>>>>>> Randomly selected		
+		var solutions = [
+	"user_entry: "+code+"  is_undefined__à_èéà_"+this.random+"(-éà_(-é_-()é_-(",
+	"user_entry: "+code+" *ù:*ù:ùmùpkj"+"with(commands){"+('date'||'')+"}"+"ihugohmi9U8P",
+	"user_entry: "+code+" :;mlùl$lppp)=)à==ç=)p$plljjôp",
+	"user_entry: "+code+"  is_undefined__àm;:ù",
+	"user_entry: "+code+"  is_undefined__àù",
+	"user_entry: "+code+"  is_unknown__àô)çà",
+	"invalid command",
+	"..."
+    ]
+	
+	
+	x=0
+	random=Math.floor(Math.random()*solutions.length);
+	while (x<random) {x++;}
+
+	view.value+= JSON.stringify(solutions[x], "\t")+"\n";
+	        if(view.value.length>5000){ view.value=view.value.slice(-5000); }
+			view.scrollTop=9e9;	
+	document.getElementById("myForm").reset();
+	code = "stop";
+	
+	}
+
+}	
+
+ function memorySend(){   //>>>>>>>>>>>>>>>>>Send User Enty to Memory Database for Learning or Archive 
+/*var str = entryFlashMemo;
+
+xmlhttp = new XMLHttpRequest();
+
+str = "q=" + encodeURIComponent(str);
+
+xmlhttp.open("POST","process.php", true);
+
+xmlhttp.onreadystatechange=function(){
+    if (xmlhttp.readyState == 4){
+        if(xmlhttp.status == 200){
+            alert (xmlhttp.responseText);
+        }
+    }
+};
+
+xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+xmlhttp.send(str);
+*/
+} 
+
+function loadDataBase () {
+
+	var rawDefaultx = defaultx;
+	
+    var rawAction = action;
+
+    var rawPeinture = peinture;
+    
+    var rawPrisonnier = prisonnier;
+    
+    var rawCcrg = ccrg;
+    
+    var rawData = data;
+    
+    var rawIntroloop = introloop;
+    
+    var rawCengt = cengt;
+        
+   //~ rawCengt.send();
+   //~ rawIntroloop.send();
+   //~ rawData.send();
+   //~ rawCcrg.send();
+   //~ rawDefaultx.send();
+   //~ rawPrisonnier.send();		
+   //~ rawPeinture.send();	
+   //~ rawAction.send();
+   
+}
+
+function joey(pronominal) {
+	if (language == "en") {var text=cengt;} else {var text = strange;}
+	oMKV.setMaxLength ( 1 );
+	oMKV.setChainLength ( 3 );
+	oMKV.add ( text );
+	sentences = oMKV.getSentences ( 1, pronominal, 1, 1 );		
+	compose = [];
+	pronom = [];
+    return sentences;
+}
+</script>
+
+</body>
+
 </html>
